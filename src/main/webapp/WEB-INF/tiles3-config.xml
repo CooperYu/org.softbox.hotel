@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- 通用模板 布局在此JSP中 -->
+	<definition name="blank" 			template="/WEB-INF/views/layout/blank-layout.jsp" /><!-- 空白页面布局 -->
+	<definition name="default-layout"	template="/WEB-INF/views/layout/default-layout.jsp" /><!-- 前台默认布局 -->
+	<definition name="wenxin-layout" 	template="/WEB-INF/views/layout/weixin-layout.jsp" /><!-- 微信页面布局 -->
+	<definition name="admin-layout" 	template="/WEB-INF/views/layout/admin-layout.jsp" /><!-- 后台页面布局 -->
+	
+	
+	
+	<!-- ============================================================================================================================ -->
+	<!-- ================================================== 前台 ===================================================================== -->
+	<!-- ============================================================================================================================ -->
+	<!-- 首页{ -->
+	<definition name="default" extends="default-layout">
+		<put-attribute name="title" value="井庭OPIUMRESIDENCE - 首页"/>
+		<put-attribute name="header" value="/WEB-INF/views/layout/front/default-header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/default.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/front/default-footer.jsp" />
+	</definition>
+	<!-- } -->
+	
+	<!-- 关于我们{ -->
+	<definition name="about" extends="default-layout">
+		<put-attribute name="title" value="井庭OPIUMRESIDENCE - 关于我们"/>
+		<put-attribute name="header" value="/WEB-INF/views/layout/front/default-header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/about.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/front/default-footer.jsp" />
+	</definition>
+	<!-- } -->
+	
+	<!-- room_types 房间首页{ -->
+	<definition name="room_types" extends="default-layout">
+		<put-attribute name="title" value="井庭OPIUMRESIDENCE - 房间预订"/>
+		<put-attribute name="header" value="/WEB-INF/views/layout/front/default-header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/room_types.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/front/default-footer.jsp" />
+	</definition>
+	<!-- } -->
+	
+	<!-- room_details 房间明细预览预订{ -->
+	<definition name="room_details" extends="default-layout">
+		<put-attribute name="title" value="井庭OPIUMRESIDENCE - 房间预订"/>
+		<put-attribute name="header" value="/WEB-INF/views/layout/front/default-header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/room_details.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/front/default-footer.jsp" />
+	</definition>
+	<!-- } -->
+	
+	<!-- facilities 酒店设施{ -->
+	<definition name="facilities" extends="default-layout">
+		<put-attribute name="title" value="井庭OPIUMRESIDENCE - 房间预订"/>
+		<put-attribute name="header" value="/WEB-INF/views/layout/front/default-header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/facilities.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/front/default-footer.jsp" />
+	</definition>
+	<!-- } -->
+	
+	<!-- contact 关于我们{ -->
+	<definition name="contact" extends="default-layout">
+		<put-attribute name="title" value="井庭OPIUMRESIDENCE - 房间预订"/>
+		<put-attribute name="header" value="/WEB-INF/views/layout/front/default-header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/contact.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/front/default-footer.jsp" />
+	</definition>
+	<!-- } -->
+	
+	<!-- gallery 酒店图片{ -->
+	<definition name="gallery" extends="default-layout">
+		<put-attribute name="title" value="井庭OPIUMRESIDENCE - 房间预订"/>
+		<put-attribute name="header" value="/WEB-INF/views/layout/front/default-header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/gallery.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/front/default-footer.jsp" />
+	</definition>
+	<!-- } -->
+	
+	<!-- 前台错误页面 { -->
+	<definition name="error" extends="default-layout">
+		<put-attribute name="title" value="井庭OPIUMRESIDENCE - 房间预订"/>
+		<put-attribute name="header" value="/WEB-INF/views/layout/front/default-header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/error.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/front/default-footer.jsp" />
+	</definition>
+	<!-- } -->
+	
+	<!-- ============================================================================================================================ -->
+	<!-- ================================================== 微信 ===================================================================== -->
+	<!-- ============================================================================================================================ -->
+	<!-- 微信成功页面{ -->
+	<definition name="weixin/succ" template="/WEB-INF/views/layout//weixin-succ.jsp">
+		<put-attribute name="title" value="井庭OPIUMRESIDENCE - 微信首页"/>
+		<put-attribute name="content" value="/WEB-INF/views/weixin/succ.jsp" />
+	</definition>
+	<!-- } -->
+	
+	<!-- 微信页面{ -->
+	<definition name="weixin/*" extends="wenxin-layout">
+		<put-attribute name="title" value="井庭OPIUMRESIDENCE - 微信首页"/>
+		<put-attribute name="header" value="/WEB-INF/views/layout/weixin/weixin-header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/weixin/{1}.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/weixin/weixin-footer.jsp" />
+	</definition>
+	<!-- } -->
+	
+	
+	<!-- ============================================================================================================================ -->
+	<!-- ========================================================= 后 台 ============================================================ -->
+	<!-- ============================================================================================================================ -->
+	
+	<!-- 后台登录{ -->
+	<definition name="admin/login" template="/WEB-INF/views/layout/adminLogin-layout.jsp">
+		<put-attribute name="title" value="井庭OPIUMRESIDENCE - 后台"/>
+		<put-attribute name="content" value="/WEB-INF/views/admin/login.jsp" />
+	</definition>
+	
+	<!-- 后台页面{ -->
+	<definition name="admin/*" extends="admin-layout">
+		<put-attribute name="title" value="井庭OPIUMRESIDENCE - 后台"/>
+		<put-attribute name="header" value="/WEB-INF/views/layout/admin/admin-header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/admin/{1}.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/admin/admin-footer.jsp" />
+	</definition>
+	
+
+	
+</tiles-definitions>
+
+     
+
+

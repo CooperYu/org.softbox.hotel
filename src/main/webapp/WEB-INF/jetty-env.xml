@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+	<New class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg>jdbc/hotel</Arg>
+		<Arg>
+			<New class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+				<Set name="driverClassName">com.mysql.jdbc.Driver</Set>
+				<Set name="url">jdbc:mysql://127.0.0.1:3306/hotel?useUnicode=true&amp;characterEncoding=utf-8</Set>
+				<Set name="username">root</Set>
+				<Set name="password">root</Set>
+			</New>
+		</Arg>
+	</New>
+	<!--
+	<New class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg>java:/SlaveDataSource-Test</Arg>
+		<Arg>
+			<New class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+				<Set name="driverClassName">com.mysql.jdbc.Driver</Set>
+				<Set name="url">jdbc:mysql://XX.X.XX.XXX:3306/DB_name?useUnicode=true&characterEncoding=utf-8</Set>
+				<Set name="username">username</Set>
+				<Set name="password">password</Set>
+			</New>
+		</Arg>
+	</New>
+	-->
+</Configure>

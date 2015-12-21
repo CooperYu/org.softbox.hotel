@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+		
+	<import resource="spring-jndi.xml"/>	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven />
+	
+	<!-- 资源文件配置,设置为不过滤 {-->
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<mvc:resources location="/js/*"			mapping="/js/**"	 />
+	<mvc:resources location="/images/*" 	mapping="/images/**"  />
+	<!-- }资源文件配置 -->
+	
+	
+		<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven />
+	
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<!--
+    <beans:bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+        <beans:property name="viewClass"  value="org.springframework.web.servlet.view.JstlView" />  
+        <beans:property name="prefix" value="/WEB-INF/views/" />
+        <beans:property name="suffix" value=".jsp" />  
+    </beans:bean>	
+    -->
+    <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+    	<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView " />
+    </bean>
+    
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"> 
+	    <property name="definitions">
+		    <list>
+		    	<value>/WEB-INF/tiles3-config.xml</value>
+		    </list>
+    	</property> 
+    </bean> 
+    
+    
+    <context:component-scan base-package="org.hotel.com.controller.web" />
+    <context:component-scan base-package="org.hotel.com.controller.weixin" />
+    <context:component-scan base-package="org.hotel.com.bo" />
+</beans>		

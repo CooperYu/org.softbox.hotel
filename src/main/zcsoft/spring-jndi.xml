@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+						http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+	
+	<context:annotation-config />
+	<context:component-scan base-package="org.zcsoft.core.orm" />
+	
+	<!--
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="jndi/hotal" />
+	</bean>
+	-->
+	
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/hotel" resource-ref="true"/>
+	
+	<!-- JDBC Template -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- 对Model进行查询的DB工具类 -->
+	<bean id="baseDaoUtils" class="org.zcsoft.core.orm.BaseDaoUtils">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<!-- 对SQL进行操作的DB工具类 -->
+	<bean id="sqlExeUtils" class="org.zcsoft.core.orm.SqlExeUtils">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="sqlUtils" class="org.zcsoft.core.orm.SqlUtils">
+		<property name="showSQL" value="true" />
+	</bean>
+	
+</beans>
