@@ -66,4 +66,16 @@ public class SqlExeUtils extends JdbcDaoSupport{
 		sqlUtils.printlnSQL(sql);
 		return getJdbcTemplate().update(sql, args);
 	}
+	
+	/***
+	 * 查询返回一个结果，结果类型在 requiredType 参数中定义，如果需要返回String类型，写入String.class 即可
+	 * @param sql
+	 * @param requiredType
+	 * @param args
+	 * @return
+	 */
+	public <T> T queryForSingleValue(String sql,Class<T> requiredType ,Object...args){
+		sqlUtils.printlnSQL(sql);
+		return getJdbcTemplate().queryForObject(sql, requiredType, args);
+	}
 }

@@ -3,18 +3,20 @@ package org.hotel.com.bo;
 import java.util.List;
 import java.util.Map;
 
-import org.hotel.com.model.ProductVO;
+import org.hotel.com.model.CategoryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zcsoft.core.orm.BaseDaoUtils;
+import org.zcsoft.core.orm.BaseVO;
 import org.zcsoft.core.orm.SqlExeUtils;
+import org.zcsoft.core.orm.SqlUtils;
 
 
 @Service(value="categoryBO")
 public class CategoryBO {
 	
 	@Autowired
-	private BaseDaoUtils<ProductVO> baseDaoUtils;
+	private BaseDaoUtils<CategoryVO> baseDaoUtils;
 
 	@Autowired
 	private SqlExeUtils sqlExeUtils;
@@ -41,4 +43,22 @@ public class CategoryBO {
 	}
 	
 	
+	/**
+	 * 
+	 * @param categoryParam
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean insert(CategoryVO categoryVO)throws Exception{
+		StringBuffer insertSql = new StringBuffer();
+		insertSql.append("insert into category");
+		insertSql.append(" (category_id,category_name,image_path,category_keyword,create_date,category_desc,price,count,category_state)");
+		insertSql.append(" values(?,?,?,?,?,?,?,?,?)");
+		categoryVO.setCategory_id(SqlUtils.getUUID());
+		int count = this.sqlExeUtils.update(insertSql.toString(), categoryVO.toList().toArray());
+		if(count > 0){
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
+	}
 }

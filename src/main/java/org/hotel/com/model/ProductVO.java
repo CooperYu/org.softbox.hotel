@@ -3,8 +3,9 @@ package org.hotel.com.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.zcsoft.core.annotation.TableField;
 import org.zcsoft.core.annotation.Table;
+import org.zcsoft.core.annotation.TableField;
+import org.zcsoft.core.orm.BaseVO;
 
 
 /**
@@ -17,7 +18,7 @@ import org.zcsoft.core.annotation.Table;
  *
  */
 @Table(tableName="product")
-public class ProductVO {
+public class ProductVO extends BaseVO<ProductVO> {
 
 	/**
 	 * 主键你ID

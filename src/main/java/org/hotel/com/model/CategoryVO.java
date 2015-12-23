@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import org.zcsoft.core.annotation.TableField;
+import org.zcsoft.core.orm.BaseVO;
 import org.zcsoft.core.annotation.Table;
 
 /**
@@ -12,7 +13,7 @@ import org.zcsoft.core.annotation.Table;
  * @date	2015-9-23
  */
 @Table(tableName="category")
-public class CategoryVO {
+public class CategoryVO extends BaseVO<CategoryVO>{
 	
 	@TableField(fieldName="category_id",isPrimaryKey=true,isAutoIncrement=false)
 	private String category_id;
@@ -37,6 +38,9 @@ public class CategoryVO {
 	
 	@TableField(fieldName="count")
 	private Integer count;
+	
+	@TableField(fieldName="category_state")
+	private String category_state;
 	
 	public String getCategory_id() {
 		return category_id;
@@ -86,5 +90,11 @@ public class CategoryVO {
 	}
 	public void setCount(Integer count) {
 		this.count = count;
+	}
+	public String getCategory_state() {
+		return category_state;
+	}
+	public void setCategory_state(String category_state) {
+		this.category_state = category_state;
 	}
 }

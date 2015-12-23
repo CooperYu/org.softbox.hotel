@@ -3,6 +3,7 @@ package org.hotel.com.model;
 import java.util.Date;
 
 import org.zcsoft.core.annotation.TableField;
+import org.zcsoft.core.orm.BaseVO;
 import org.zcsoft.core.annotation.Table;
 
 
@@ -12,7 +13,7 @@ import org.zcsoft.core.annotation.Table;
  * @date	2015-9-23
  */
 @Table(tableName="product_media")
-public class ProductMediaVO {
+public class ProductMediaVO extends BaseVO<ProductMediaVO> {
 
 	@TableField(fieldName="media_id",isPrimaryKey=true,isAutoIncrement=false)
 	private String media_id;

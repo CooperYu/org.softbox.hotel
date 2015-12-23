@@ -2,6 +2,7 @@ package org.hotel.com.model;
 
 import org.zcsoft.core.annotation.Table;
 import org.zcsoft.core.annotation.TableField;
+import org.zcsoft.core.orm.BaseVO;
 
 /**
  * 产品类型；
@@ -9,7 +10,7 @@ import org.zcsoft.core.annotation.TableField;
  * @date	2015-9-23
  */
 @Table(tableName="category_attr")
-public class CategoryAttrVO {
+public class CategoryAttrVO extends BaseVO<CategoryAttrVO> {
 	
 	@TableField(fieldName="attr_id",isPrimaryKey=true,isAutoIncrement=false)
 	private String attr_id;//参数ID

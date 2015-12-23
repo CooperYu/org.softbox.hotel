@@ -101,8 +101,25 @@ public class OrderBO {
 	public PageModel findAllCustOrderByPageModel(PageModel pageModel,Map queryParams)  throws Exception{
 		
 		StringBuffer selectSQL = new StringBuffer();
+		
+		/**
 		selectSQL.append(" select order_id,order_type,user_name,certi_no,phone,order_state,if(order_state='00A','下单有效',if(order_state='00X','无效',if(order_state='00P','已入住',if(order_state='00S','完成','')))) as order_state_name,DATE_FORMAT(create_date,'%Y-%m-%d %H:%i:%S') as create_date,order_desc ");
 		selectSQL.append(" from cust_order a order by a.create_date desc");
+		**/
+		
+		
+		selectSQL.append(" select a.order_id,a.order_type,a.user_name,a.certi_no,a.phone,a.order_state, ");
+		selectSQL.append(" if(a.order_state='00A','有效',if(a.order_state='00X','无效',if(a.order_state='00P','入住',if(a.order_state='00S','完成','')))) as order_state_name, ");
+		selectSQL.append(" DATE_FORMAT(a.create_date,'%Y-%m-%d %H:%i:%S') as create_date, ");
+		selectSQL.append(" item.item_desc, ");
+		selectSQL.append(" item.price, ");
+		selectSQL.append(" c.category_name ");
+		selectSQL.append(" from cust_order a ,order_item item , category c "); 
+		selectSQL.append(" where a.order_id = item.order_id AND item.category_id = c.category_id ");
+		selectSQL.append(" order by a.create_date desc ");
+		
+		
+		
 		pageModel.setQuerySQL(selectSQL.toString());
 		
 		List param = new ArrayList();
@@ -129,9 +146,22 @@ public class OrderBO {
 		
 		if(StringUtils.isEmpty(order_id)) return AdminConst.FLASE_FLAG;
 		
+		//更新订单状态；
 		StringBuffer updateSQL = new StringBuffer();
 		updateSQL.append("update cust_order set order_state = ? where order_id = ?");
 		int count = this.sqlExeUtils.update(updateSQL.toString(), order_state,order_id);
+		
+		//更新库存；
+		if(StringUtils.equals(order_state, AdminConst.ORDER_STATE_00S) || StringUtils.equals(order_state, AdminConst.ORDER_STATE_00X)){
+			StringBuffer selectSQL = new StringBuffer();
+			selectSQL.append("SELECT a.category_id from order_item a where a.order_id = ? ");
+			String category_id = this.sqlExeUtils.queryForSingleValue(selectSQL.toString(), String.class, order_id);
+			
+			updateSQL = new StringBuffer("update category set count = count + 1 where category_id = ? ");
+			this.sqlExeUtils.update(updateSQL.toString(), category_id);
+		}
+		
+		
 		if(count >= 1){
 			return AdminConst.TRUE_FLAG;
 		}

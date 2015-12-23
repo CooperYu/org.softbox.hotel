@@ -110,7 +110,7 @@
 	
 	<!-- 后台登录{ -->
 	<definition name="admin/login" template="/WEB-INF/views/layout/adminLogin-layout.jsp">
-		<put-attribute name="title" value="井庭OPIUMRESIDENCE - 后台"/>
+		<put-attribute name="title" value="井庭OPIUMRESIDENCE - 后台登陆"/>
 		<put-attribute name="content" value="/WEB-INF/views/admin/login.jsp" />
 	</definition>
 	

@@ -3,7 +3,6 @@
 
 
 
-
 <div class="box-header well" data-original-title="">
 	<h2>
 		<i class="glyphicon glyphicon-user"></i> 订单管理
@@ -25,32 +24,67 @@
 			<tr>
 				<th style="display: none;">订单ID</th>
 				<th style="display: none;">订单类型</th>
-				<th width="100px;">姓名</th>
-				<th width="200px;">证件号码</th>
-				<th width="100px;">联系电话</th>
-				<th width="100px;">订单状态</th>
-				<th width="100px;">下单时间</th>
-				<th width="250px;">备注</th>
-				<th width="50px;">操作</th>
+				<th width="2%">姓名</th>
+				<th width="2%">证件号码</th>
+				<th width="2%">联系电话</th>
+				<th width="15%">房间类型</th>
+				<th width="10%">价格</th>
+				<th width="10%"> 状态 </th>
+				<th width="10%">下单时间</th>
+				<th width="10%">备注</th>
+				<th width="1%">操作</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach var="order" items="${ pageModel.dataResult }" >
 				<tr>
-					<td style="display: none;">${ order.order_id }</td>
+					<td style="display: none;" >${ order.order_id }</td>
 					<td style="display: none;">${ order.order_type }</td>
-					<td class="center">${ order.user_name }</td>
-					<td class="center">${ order.certi_no }</td>
-					<td class="center">${ order.phone }</td>
-					<td class="center">${ order.order_state_name }</td>
-					<td class="center">${ order.create_date }</td>
-					<td class="center">${ order.order_desc }</td>
-					<td class="center">
-						<a class="btn btn-success btn-setting_${ order.order_id }" href="#"><i class="glyphicon glyphicon-zoom-in icon-white"></i>显示</a>
-						<a class="btn btn-info" href="javascript:revert_repository('${ order.order_id }');" id=""><i class="glyphicon glyphicon-edit icon-white"></i>还原库存</a>
-		            	<a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash icon-white"></i>处理</a>
+					<td class="">${ order.user_name }</td>
+					<td class="">${ order.certi_no }</td>
+					<td class="">${ order.phone }</td>
+					
+					<td class="">${ order.category_name }</td>
+					<td class="">${ order.price }</td>
+					
+					<td class="" id="show_order_state_${ order.order_id }">${ order.order_state_name }</td>
+					<td class="">${ order.create_date }</td>
+					<td class="">${ order.item_desc }</td>
+					<td class="">
+						<%-- 操作按钮 --%>
+						<%--
+							public static final String ORDER_STATE_00A = "有效";
+							public static final String ORDER_STATE_00X = "无效";
+							public static final String ORDER_STATE_00P = "已入住";
+							public static final String ORDER_STATE_00S = "完成";
+						--%>
+						<a id="view_${ order.order_id }" 							class="btn btn-info" href="#"><i class="glyphicon glyphicon-zoom-in icon-white"></i>显示</a>
+						<c:choose>
+							<c:when test="${ order.order_state == '00A' }"><%-- 正常下单 --%>
+				            	<a id="ruzhu_${ order.order_id }" 							class="btn btn-warning" href="javascript:ruzhu('${ order.order_id }');"><i class="glyphicon glyphicon-check"></i>入住</a>
+								<a id="revert_${ order.order_id }" style="display: none;"	class="btn btn-success" href="javascript:revert('${ order.order_id }');" ><i class="glyphicon glyphicon-edit icon-white"></i>完成</a>
+				            	<a id="quxiao_${ order.order_id }" 							class="btn btn-danger" 	href="javascript:cancel('${ order.order_id }');"><i class="glyphicon glyphicon-remove"></i>取消</a>
+							</c:when>
+							<c:when test="${ order.order_state == '00P' }"><%-- 已经入住 --%>
+				            	<a id="ruzhu_${ order.order_id }" 	style="display: none;" 	class="btn btn-warning" href="javascript:ruzhu('${ order.order_id }');"><i class=glyphicon glyphicon-check"></i>入住</a>
+								<a id="revert_${ order.order_id }" 							class="btn btn-success" href="javascript:revert('${ order.order_id }');" ><i class="glyphicon glyphicon-edit icon-white"></i>完成</a>
+				            	<a id="quxiao_${ order.order_id }" 	 						class="btn btn-danger" 	href="javascript:cancel('${ order.order_id }');"><i class="glyphicon glyphicon-remove"></i>取消</a>
+							</c:when>
+							<c:when test="${ order.order_state == '00X' }"><%-- 无效  --%>
+				            	<a id="ruzhu_${ order.order_id }" 	style="display: none;" 	class="btn btn-warning" href="javascript:ruzhu('${ order.order_id }');"><i class="glyphicon glyphicon-check"></i>入住</a>
+								<a id="revert_${ order.order_id }" 	style="display: none;" 	class="btn btn-success" href="javascript:revert('${ order.order_id }');" ><i class="glyphicon glyphicon-edit icon-white"></i>完成</a>
+				            	<a id="quxiao_${ order.order_id }" 	style="display: none;" 	class="btn btn-danger" 	href="javascript:cancel('${ order.order_id }');"><i class="glyphicon glyphicon-remove"></i>取消</a>
+							</c:when>
+							<c:when test="${ order.order_state == '00S' }"><%-- 完成  --%>
+				            	<a id="ruzhu_${ order.order_id }" 	style="display: none;" 	class="btn btn-warning" href="javascript:ruzhu('${ order.order_id }');"><i class="glyphicon glyphicon-check"></i>入住</a>
+								<a id="revert_${ order.order_id }" 	style="display: none;" 	class="btn btn-success" href="javascript:revert('${ order.order_id }');" ><i class="glyphicon glyphicon-edit icon-white"></i>完成</a>
+				            	<a id="quxiao_${ order.order_id }" 	style="display: none;" 	class="btn btn-danger" 	href="javascript:cancel('${ order.order_id }');"><i class="glyphicon glyphicon-remove"></i>取消</a>
+							</c:when>
+						</c:choose>
+		            	
+		            	
 		            	<%-- 表单Form --%>
-		            	<form action="${ adminCtxPath }/saveOrder.html" method="post" id="order_${ order.order_id }">
+		            	<form action="${ adminCtxPath }/saveOrder.html" method="post" id="order_${ order.order_id }" style="widows: 0px;height: 0px;">
 						<div class="modal fade" id="myModal_${ order.order_id }" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						    <div class="modal-dialog">
 						        <div class="modal-content">
@@ -66,7 +100,7 @@
 						                	<tr><td>证件号码：</td><td><input type="text" disabled="disabled" class="form-control" id="order_type" value="${ order.certi_no }" ></td></tr>
 						                	<tr><td>联系电话：</td><td><input type="text" disabled="disabled" class="form-control" id="order_type" value="${ order.phone }" ></td></tr>
 						                	<tr><td>下单时间 ：</td><td><input type="text" disabled="disabled" class="form-control" id="order_type" value="${ order.create_date }" ></td></tr>
-						                	<tr><td>描 &nbsp;&nbsp;&nbsp;&nbsp; 述：</td><td><textarea class="autogrow" disabled="disabled" cols="58" rows="20">&nbsp;${ order.order_desc }</textarea></td></tr>
+						                	<tr><td>描 &nbsp;&nbsp;&nbsp;&nbsp; 述：</td><td><textarea class="autogrow" disabled="disabled" cols="58" rows="20">&nbsp;${ order.item_desc }</textarea></td></tr>
 						                </table>
 						            </div>
 						            <%--
@@ -80,7 +114,7 @@
 						</div>
 						</form>
 						<script type="text/javascript">
-							$('.btn-setting_'+ '${ order.order_id }').click(function (e) {
+							$('#view_'+ '${ order.order_id }').click(function (e) {
 							    e.preventDefault();
 							    $('#myModal_' + '${ order.order_id }').modal('show');
 							});
@@ -94,29 +128,79 @@
 
 <script type="text/javascript">
 
-	/**还原库存 (ajax体积)**/
-	function revert_repository(order_id){
-		ajaxUpdateOrderState(order_id, "00S");
+	/**入住**/
+	function ruzhu(order_id){
+		
+		if(!confirm("是否入住！")) return;
+		
+		var flag = ajaxUpdateOrderState(order_id, "00P");
+		if(flag){
+			//按钮调整
+			$('#ruzhu_'+order_id).hide();
+			$('#revert_'+order_id).show();
+			$('#quxiao_'+order_id).show();
+			
+			//修改状态；
+			$('#show_order_state_'+order_id).html("已入住");
+		}
+	}
+	
+	/**完成，将还原库存 (ajax提交)**/
+	function revert(order_id){
+		if(!confirm("是否完成！")) return;
+		
+		var flag = ajaxUpdateOrderState(order_id, "00S");
+		if(flag){
+			//按钮调整
+			$('#ruzhu_'+order_id).hide();
+			$('#revert_'+order_id).hide();
+			$('#quxiao_'+order_id).hide();
+			
+			//修改状态；
+			$('#show_order_state_'+order_id).html("完成");
+		}
+	}
+	
+	/**取消订单**/
+	function cancel(order_id){
+		if(!confirm("是否取消！")) return;
+		var flag = ajaxUpdateOrderState(order_id, "00X");
+		if(flag){
+			//按钮调整
+			$('#ruzhu_'+order_id).hide();
+			$('#revert_'+order_id).hide();
+			$('#quxiao_'+order_id).hide();
+			
+			//修改状态；
+			$('#show_order_state_'+order_id).html("无效");
+		}
 	}
 	
 	function ajaxUpdateOrderState(order_id,order_state){
+		var returnflag = false;
 		$.ajax({   
 		    type : "POST",   
 		    url : '${ adminCtxPath }/updateOrderState.html', 
+		    async : false,
 		    data : {
 		      'order_id' : order_id	,
 		      'order_state':order_state
 			},  
 		    dataType: "json",   
-		    success : function(data) {
-				debugger;
-		        if(data.success){   
-		            alert("设置成功！");   
+		    success : function(data){
+		    	if(data.success == 'T'){   
+		            alert("操作成功！"); 
+		            returnflag = true;
+		        }else{   
+		            alert("操作失败！");   
+		            returnflag = false;
 		        }   
-		        else{   
-		            alert("设置失败！");   
-		        }   
-		    }
-		});   
+		    },
+			error: function(){
+				alert("操作失败！");
+				returnflag = false;
+			}
+		});
+		return returnflag;
 	}
 </script>

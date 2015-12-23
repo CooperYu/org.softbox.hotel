@@ -2,6 +2,7 @@ package org.hotel.com.model;
 
 import org.zcsoft.core.annotation.Table;
 import org.zcsoft.core.annotation.TableField;
+import org.zcsoft.core.orm.BaseVO;
 
 /**
  * 菜单model；
@@ -9,7 +10,7 @@ import org.zcsoft.core.annotation.TableField;
  * @date	2015-9-25
  */
 @Table(tableName="menu")
-public class MenuVO {
+public class MenuVO extends BaseVO<MenuVO> {
 	
 	@TableField(fieldName="menu_id",isPrimaryKey=true,isAutoIncrement=false)
 	public String menu_id;

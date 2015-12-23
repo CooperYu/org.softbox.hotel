@@ -1,5 +1,6 @@
 package org.hotel.com.controller.web;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -8,10 +9,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.hotel.com.bo.CategoryAttrBO;
 import org.hotel.com.bo.CategoryBO;
 import org.hotel.com.bo.MenuBO;
 import org.hotel.com.bo.OrderBO;
+import org.hotel.com.model.CategoryVO;
+import org.hotel.com.utils.AdminConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,17 +110,51 @@ public class AdminController{
 	
 	
 	
-	/** Ajax 更新数据库 cust_order 的状态**/
+	/** Ajax 更新数据库 cust_order 的状态，回返更新状态；**/
 	@RequestMapping(value = "updateOrderState.html", method = RequestMethod.POST)  
 	public @ResponseBody String updateOrderState(HttpServletRequest request,HttpServletResponse response) throws Exception {
 
 		String order_state  = request.getParameter("order_state");
 		String order_id = request.getParameter("order_id");
 		String result_code = this.orderBo.updateOrderStateByOrderId(order_state, order_id);
+		Map<String,Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("success", result_code);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String returnJson =  mapper.writeValueAsString(returnMap); 
+		
+		return returnJson;
+		
+	}
+	
+	/** Add New Room URL **/
+	@RequestMapping(value="addRoom.html" , method = RequestMethod.POST)
+	public String addRooms(HttpServletRequest request ,HttpServletResponse response) throws Exception{
 		
 		
+		String category_name = request.getParameter("category_name");
+		String image_path = request.getParameter("image_path");
+		String category_keyword = request.getParameter("category_keyword");
+		String category_desc = request.getParameter("category_desc");
+		String price = request.getParameter("price");
+		String count = request.getParameter("count");
 		
-		return result_code;
+		CategoryVO room = new CategoryVO();
+		room.setCategory_name(category_name);
+		room.setImage_path(image_path);
+		room.setCategory_keyword(category_keyword);
+		room.setCategory_desc(category_desc);
+		room.setPrice(new BigDecimal(price));
+		room.setCount(new Integer(count));
+		room.setCategory_state(AdminConst.CATEGORY_STATE_00A);
 		
+		
+		return "";
+	}
+	
+	/** modify room **/
+	@RequestMapping(value="modifyRoom.html" ,method = RequestMethod.POST)
+	public String updateRoomState(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		return "";
 	}
 }

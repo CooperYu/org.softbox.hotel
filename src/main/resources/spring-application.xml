@@ -12,6 +12,7 @@
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
+	<context:annotation-config />  
 	
 	<!-- 资源文件配置,设置为不过滤 {-->
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->

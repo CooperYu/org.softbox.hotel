@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.zcsoft.core.annotation.Table;
 import org.zcsoft.core.annotation.TableField;
+import org.zcsoft.core.orm.BaseVO;
 
 /**
  * 订单项（order_item)
@@ -12,7 +13,7 @@ import org.zcsoft.core.annotation.TableField;
  * @date	2015-9-23
  */
 @Table(tableName="order_item")
-public class OrderItemVO {
+public class OrderItemVO extends BaseVO<OrderItemVO> {
 	
 	/**
 	 * 订单状态：有效
