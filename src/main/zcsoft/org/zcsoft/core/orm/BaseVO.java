@@ -10,17 +10,14 @@ import org.zcsoft.core.annotation.TableField;
 
 public class BaseVO<T> {
 	
-	private T entity;
-	
 	/**
 	 * 转换为 List
 	 * @return
 	 */
 	public List toList(){
 		List returnList = new ArrayList();
-		Class<? extends Object> entityClass = entity.getClass();
-		Table table = entityClass.getAnnotation(Table.class);
-		Field[] fields = entityClass.getDeclaredFields();
+		Table table = this.getClass().getAnnotation(Table.class);
+		Field[] fields = this.getClass().getDeclaredFields();
 		String temp = "";
 		StringBuffer valueSql = new StringBuffer();
 		for (Field f : fields) {
@@ -30,15 +27,19 @@ public class BaseVO<T> {
 			// 转换成字段的get方法
 			String getMethodName = "get" + firstLetter + f.getName().substring(1);
 			try{
-				Method getMethod = entityClass.getMethod(getMethodName, new Class[] {});
+				Method getMethod = this.getClass().getMethod(getMethodName, new Class[] {});
 				// 这个对象字段get方法的值
-				Object value = getMethod.invoke(entity, new Object[] {});
+				Object value = getMethod.invoke(this, new Object[] {});
 				returnList.add(value);
 			}catch(Exception e){
-				
+				e.printStackTrace();
 			}
 		}
-		return null;
+		return returnList;
+	}
+	
+	public <T> Object[] toArray(){
+		return this.toList().toArray();
 	}
 	
 }

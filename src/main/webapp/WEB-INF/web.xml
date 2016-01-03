@@ -40,4 +40,16 @@
 		<servlet-name>SpringMVC</servlet-name>
 		<url-pattern>*.html</url-pattern>
 	</servlet-mapping>
+	
+	
+	
+	<servlet>
+		<servlet-name>fileupdateServlet</servlet-name>
+		<servlet-class>org.hotel.com.controller.servlet.FileUploadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>fileupdateServlet</servlet-name>
+		<url-pattern>/fileupload</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

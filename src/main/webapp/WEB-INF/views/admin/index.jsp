@@ -27,12 +27,12 @@
 				<th width="2%">姓名</th>
 				<th width="2%">证件号码</th>
 				<th width="2%">联系电话</th>
-				<th width="15%">房间类型</th>
-				<th width="10%">价格</th>
-				<th width="10%"> 状态 </th>
-				<th width="10%">下单时间</th>
-				<th width="10%">备注</th>
-				<th width="1%">操作</th>
+				<th width="10%">房间类型</th>
+				<th width="5%">价格</th>
+				<th width="5%">状态 </th>
+				<th width="8%">下单时间</th>
+				<th width="11%">备注</th>
+				<th width="16%">操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -58,27 +58,27 @@
 							public static final String ORDER_STATE_00P = "已入住";
 							public static final String ORDER_STATE_00S = "完成";
 						--%>
-						<a id="view_${ order.order_id }" 							class="btn btn-info" href="#"><i class="glyphicon glyphicon-zoom-in icon-white"></i>显示</a>
+						<button id="view_${ order.order_id }" class="btn btn-info btn-sm"><i class="glyphicon glyphicon-zoom-in icon-white"></i>显示</button>
 						<c:choose>
 							<c:when test="${ order.order_state == '00A' }"><%-- 正常下单 --%>
-				            	<a id="ruzhu_${ order.order_id }" 							class="btn btn-warning" href="javascript:ruzhu('${ order.order_id }');"><i class="glyphicon glyphicon-check"></i>入住</a>
-								<a id="revert_${ order.order_id }" style="display: none;"	class="btn btn-success" href="javascript:revert('${ order.order_id }');" ><i class="glyphicon glyphicon-edit icon-white"></i>完成</a>
-				            	<a id="quxiao_${ order.order_id }" 							class="btn btn-danger" 	href="javascript:cancel('${ order.order_id }');"><i class="glyphicon glyphicon-remove"></i>取消</a>
+				            	<button id="ruzhu_${ order.order_id }" 							class="btn btn-warning btn-sm"	onclick="ruzhu('${ order.order_id }');"><i class="glyphicon glyphicon-check"></i>入住</button>
+								<button id="revert_${ order.order_id }" style="display: none;"	class="btn btn-success btn-sm"	onclick="revert('${ order.order_id }');" ><i class="glyphicon glyphicon-edit icon-white"></i>完成</button>
+				            	<button id="quxiao_${ order.order_id }" 						class="btn btn-danger btn-sm" 	onclick="cancel('${ order.order_id }');"><i class="glyphicon glyphicon-remove"></i>取消</button>
 							</c:when>
 							<c:when test="${ order.order_state == '00P' }"><%-- 已经入住 --%>
-				            	<a id="ruzhu_${ order.order_id }" 	style="display: none;" 	class="btn btn-warning" href="javascript:ruzhu('${ order.order_id }');"><i class=glyphicon glyphicon-check"></i>入住</a>
-								<a id="revert_${ order.order_id }" 							class="btn btn-success" href="javascript:revert('${ order.order_id }');" ><i class="glyphicon glyphicon-edit icon-white"></i>完成</a>
-				            	<a id="quxiao_${ order.order_id }" 	 						class="btn btn-danger" 	href="javascript:cancel('${ order.order_id }');"><i class="glyphicon glyphicon-remove"></i>取消</a>
+				            	<button id="ruzhu_${ order.order_id }" 	style="display: none;" 	class="btn btn-warning btn-sm" 	href="ruzhu('${ order.order_id }');"><i class="glyphicon glyphicon-check"></i>入住</button>
+								<button id="revert_${ order.order_id }" 						class="btn btn-success btn-sm" 	href="revert('${ order.order_id }');" ><i class="glyphicon glyphicon-edit icon-white"></i>完成</button>
+				            	<button id="quxiao_${ order.order_id }" 	 					class="btn btn-danger btn-sm" 	href="cancel('${ order.order_id }');"><i class="glyphicon glyphicon-remove"></i>取消</button>
 							</c:when>
 							<c:when test="${ order.order_state == '00X' }"><%-- 无效  --%>
-				            	<a id="ruzhu_${ order.order_id }" 	style="display: none;" 	class="btn btn-warning" href="javascript:ruzhu('${ order.order_id }');"><i class="glyphicon glyphicon-check"></i>入住</a>
-								<a id="revert_${ order.order_id }" 	style="display: none;" 	class="btn btn-success" href="javascript:revert('${ order.order_id }');" ><i class="glyphicon glyphicon-edit icon-white"></i>完成</a>
-				            	<a id="quxiao_${ order.order_id }" 	style="display: none;" 	class="btn btn-danger" 	href="javascript:cancel('${ order.order_id }');"><i class="glyphicon glyphicon-remove"></i>取消</a>
+				            	<button id="ruzhu_${ order.order_id }"	style="display: none;" 	class="btn btn-warning btn-sm" 	href="ruzhu('${ order.order_id }');"><i class="glyphicon glyphicon-check"></i>入住</button>
+								<button id="revert_${ order.order_id }" style="display: none;" 	class="btn btn-success btn-sm" 	href="revert('${ order.order_id }');" ><i class="glyphicon glyphicon-edit icon-white"></i>完成</button>
+				            	<button id="quxiao_${ order.order_id }" style="display: none;" 	class="btn btn-danger btn-sm" 	href="cancel('${ order.order_id }');"><i class="glyphicon glyphicon-remove"></i>取消</button>
 							</c:when>
 							<c:when test="${ order.order_state == '00S' }"><%-- 完成  --%>
-				            	<a id="ruzhu_${ order.order_id }" 	style="display: none;" 	class="btn btn-warning" href="javascript:ruzhu('${ order.order_id }');"><i class="glyphicon glyphicon-check"></i>入住</a>
-								<a id="revert_${ order.order_id }" 	style="display: none;" 	class="btn btn-success" href="javascript:revert('${ order.order_id }');" ><i class="glyphicon glyphicon-edit icon-white"></i>完成</a>
-				            	<a id="quxiao_${ order.order_id }" 	style="display: none;" 	class="btn btn-danger" 	href="javascript:cancel('${ order.order_id }');"><i class="glyphicon glyphicon-remove"></i>取消</a>
+				            	<button id="ruzhu_${ order.order_id }" 	style="display: none;" 	class="btn btn-warning btn-sm" 	href="ruzhu('${ order.order_id }');"><i class="glyphicon glyphicon-check"></i>入住</button>
+								<button id="revert_${ order.order_id }" style="display: none;" 	class="btn btn-success btn-sm" 	href="revert('${ order.order_id }');" ><i class="glyphicon glyphicon-edit icon-white"></i>完成</button>
+				            	<button id="quxiao_${ order.order_id }" style="display: none;" 	class="btn btn-danger btn-sm" 	href="cancel('${ order.order_id }');"><i class="glyphicon glyphicon-remove"></i>取消</button>
 							</c:when>
 						</c:choose>
 		            	
@@ -94,13 +94,13 @@
 						            </div>
 						            <div class="modal-body">
 						                <table>
-						                	<tr><td>订单ID&nbsp;：</td><td><input type="text" disabled="disabled" class="form-control" id="order_type" value="${ order.order_id }" ></td></tr>
+						                	<tr><td>订单编码：</td><td><input type="text" disabled="disabled" class="form-control" id="order_type" value="${ order.order_id }" ></td></tr>
 						                	<tr><td>订单类型：</td><td><input type="text" disabled="disabled" class="form-control" id="order_type" value="${ order.order_type }" ></td></tr>
-						                	<tr><td>联&nbsp;系&nbsp;人：</td><td><input type="text" disabled="disabled" class="form-control" id="order_type" value="${ order.user_name }" ></td></tr>
+						                	<tr><td>联系人：</td><td><input type="text" disabled="disabled" class="form-control" id="order_type" value="${ order.user_name }" ></td></tr>
 						                	<tr><td>证件号码：</td><td><input type="text" disabled="disabled" class="form-control" id="order_type" value="${ order.certi_no }" ></td></tr>
 						                	<tr><td>联系电话：</td><td><input type="text" disabled="disabled" class="form-control" id="order_type" value="${ order.phone }" ></td></tr>
-						                	<tr><td>下单时间 ：</td><td><input type="text" disabled="disabled" class="form-control" id="order_type" value="${ order.create_date }" ></td></tr>
-						                	<tr><td>描 &nbsp;&nbsp;&nbsp;&nbsp; 述：</td><td><textarea class="autogrow" disabled="disabled" cols="58" rows="20">&nbsp;${ order.item_desc }</textarea></td></tr>
+						                	<tr><td>下单时间：</td><td><input type="text" disabled="disabled" class="form-control" id="order_type" value="${ order.create_date }" ></td></tr>
+						                	<tr><td>描述：</td><td><textarea class="autogrow" disabled="disabled" cols="55" rows="20">&nbsp;${ order.item_desc }</textarea></td></tr>
 						                </table>
 						            </div>
 						            <%--

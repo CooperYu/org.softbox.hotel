@@ -44,7 +44,7 @@ public class CategoryBO {
 	
 	
 	/**
-	 * 
+	 * 新增Category
 	 * @param categoryParam
 	 * @return
 	 * @throws Exception
@@ -53,12 +53,77 @@ public class CategoryBO {
 		StringBuffer insertSql = new StringBuffer();
 		insertSql.append("insert into category");
 		insertSql.append(" (category_id,category_name,image_path,category_keyword,create_date,category_desc,price,count,category_state)");
-		insertSql.append(" values(?,?,?,?,?,?,?,?,?)");
+		insertSql.append(" values(?,?,?,?,now(),?,?,?,?)");
 		categoryVO.setCategory_id(SqlUtils.getUUID());
-		int count = this.sqlExeUtils.update(insertSql.toString(), categoryVO.toList().toArray());
+//		int count = this.sqlExeUtils.update(insertSql.toString(), categoryVO.toArray());
+		int count = this.sqlExeUtils.update(insertSql.toString(), 
+				categoryVO.getCategory_id(),
+				categoryVO.getCategory_name(),
+				categoryVO.getImage_path(),
+				categoryVO.getCategory_keyword(),
+				categoryVO.getCategory_desc(),
+				categoryVO.getPrice(),
+				categoryVO.getCount(),
+				categoryVO.getCategory_state());
 		if(count > 0){
 			return Boolean.TRUE;
 		}
 		return Boolean.FALSE;
+	}
+	
+	/**
+	 * 更新 Category 的状态；
+	 * @param category_id
+	 * @param category_state
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean updateCategoryState(String category_id,String category_state) throws Exception{
+		StringBuffer updateSql = new StringBuffer();
+		updateSql.append("update category set category_state = ? where category_id = ?");
+		int count = this.sqlExeUtils.update(updateSql.toString(),category_state,category_id);
+		if(count > 0){
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
+	}
+	
+	public boolean updateCategory(CategoryVO categoryVO) throws Exception{
+		StringBuffer updateSQL = new StringBuffer();
+		updateSQL.append("update category set category_name = ?, image_path = ?, category_state = ?, price = ?, count = ?, category_keyword = ?, category_desc = ? where category_id = ?");
+		int count = this.sqlExeUtils.update(updateSQL.toString(), 
+				categoryVO.getCategory_name(),
+				categoryVO.getImage_path(),
+				categoryVO.getCategory_state(),
+				categoryVO.getPrice(),
+				categoryVO.getCount(),
+				categoryVO.getCategory_keyword(),
+				categoryVO.getCategory_desc(),
+				categoryVO.getCategory_id());
+		if(count > 0){
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
+	}
+	
+	/**
+	 * 删除Category
+	 * @param category_id
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean deleteCategory(String category_id) throws Exception{
+		StringBuffer deleteSql = new StringBuffer();
+		deleteSql.append("delete from category where category_id = ? ");
+		int count = this.sqlExeUtils.update(deleteSql.toString(), category_id);
+		if(count > 0){
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
+	}
+	
+	public Boolean deleteCategory(String category_id,String category_name) throws Exception{
+		
+		return null;
 	}
 }

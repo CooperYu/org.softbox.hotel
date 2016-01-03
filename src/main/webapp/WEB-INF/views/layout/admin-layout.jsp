@@ -67,12 +67,18 @@
 	<!-- autogrowing textarea plugin -->
 	<script src="${ adminResCtxPath }/js/jquery.autogrow-textarea.js"></script>
 	<!-- multiple file upload plugin -->
-	<script src="${ adminResCtxPath }/js/jquery.uploadify-3.1.min.js"></script>
+<%-- 	<script src="${ adminResCtxPath }/js/jquery.uploadify-3.1.min.js"></script> --%>
+	<script src="${ adminResCtxPath }/js/jquery.uploadify.js"></script>
 	<!-- history.js for cross-browser state change on ajax -->
 	<script src="${ adminResCtxPath }/js/jquery.history.js"></script>
 	<!-- application script for Charisma demo -->
 	<script src="${ adminResCtxPath }/js/charisma.js"></script>
-
+	<script type="text/javascript">
+		var ctxPath = '${ ctxPath }';
+		var adminCtxPath = '${ adminCtxPath }';/**后台上下文路径**/
+		var adminResCtxPath = '${ adminResCtxPath }';/**后台资源上下文路径**/
+	</script>
+	
 </head>
 <body>
 	<%-- 头部文件，包含Banner --%>

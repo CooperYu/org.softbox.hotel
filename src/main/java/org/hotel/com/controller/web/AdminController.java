@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.hotel.com.bo.CategoryAttrBO;
 import org.hotel.com.bo.CategoryBO;
@@ -127,34 +128,72 @@ public class AdminController{
 		
 	}
 	
-	/** Add New Room URL **/
-	@RequestMapping(value="addRoom.html" , method = RequestMethod.POST)
-	public String addRooms(HttpServletRequest request ,HttpServletResponse response) throws Exception{
-		
-		
-		String category_name = request.getParameter("category_name");
-		String image_path = request.getParameter("image_path");
-		String category_keyword = request.getParameter("category_keyword");
-		String category_desc = request.getParameter("category_desc");
-		String price = request.getParameter("price");
-		String count = request.getParameter("count");
-		
-		CategoryVO room = new CategoryVO();
-		room.setCategory_name(category_name);
-		room.setImage_path(image_path);
-		room.setCategory_keyword(category_keyword);
-		room.setCategory_desc(category_desc);
-		room.setPrice(new BigDecimal(price));
-		room.setCount(new Integer(count));
-		room.setCategory_state(AdminConst.CATEGORY_STATE_00A);
-		
-		
-		return "";
+	/**Ajax 获取Category By category_id **/
+	@RequestMapping(value="getCategoryById.html", method = RequestMethod.POST,produces="text/html;charset=UTF-8")
+	public @ResponseBody String getCategoryByCategoryId(HttpServletRequest request,HttpServletResponse response)throws Exception{
+		String category_id = request.getParameter("category_id");
+		Map category = this.categoryBo.findCategoryByCategoryId(category_id);
+		category.put("success", AdminConst.TRUE_FLAG);
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(category);
 	}
 	
-	/** modify room **/
-	@RequestMapping(value="modifyRoom.html" ,method = RequestMethod.POST)
-	public String updateRoomState(HttpServletRequest request, HttpServletResponse response)throws Exception{
-		return "";
+	/** Add New Room URL **/
+	@RequestMapping(value="addRoom.html" , method = RequestMethod.POST)
+	public @ResponseBody String addRooms(HttpServletRequest request ,HttpServletResponse response) throws Exception{
+		
+		Map hashMap = new HashMap();
+		String category_id = request.getParameter("category_id");
+		String category_name = request.getParameter("category_name");
+		String image_path = request.getParameter("info_path");
+		String category_keyword = request.getParameter("category_keyword");
+		String category_desc = request.getParameter("category_desc");
+		String category_state = request.getParameter("category_state");
+		String price = request.getParameter("price");
+		String count = request.getParameter("count");
+		String action = request.getParameter("action");
+		boolean flag = Boolean.FALSE;
+		if(StringUtils.equals(action, "new")){
+			CategoryVO room = new CategoryVO();
+			room.setCategory_name(category_name);
+			room.setImage_path(image_path);
+			room.setCategory_keyword(category_keyword);
+			room.setCategory_desc(category_desc);
+			room.setPrice(new BigDecimal(price));
+			room.setCount(new Integer(count));
+			room.setCategory_state(category_state);
+			flag = this.categoryBo.insert(room);
+		}else if(StringUtils.equals(action, "modify")){
+			CategoryVO room = new CategoryVO();
+			room.setCategory_id(category_id);
+			room.setCategory_name(category_name);
+			room.setImage_path(image_path);
+			room.setCategory_keyword(category_keyword);
+			room.setCategory_desc(category_desc);
+			room.setPrice(new BigDecimal(price));
+			room.setCount(new Integer(count));
+			room.setCategory_state(category_state);
+			flag = this.categoryBo.updateCategory(room);
+		}
+		
+		if(flag){
+			hashMap.put("success", AdminConst.TRUE_FLAG);
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(hashMap);
+	}
+	
+	/**  delere room **/
+	@RequestMapping(value="delRoom.html" ,method = RequestMethod.POST)
+	public @ResponseBody String deleteRoom(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		String category_id = request.getParameter("category_id");
+		boolean flag  = this.categoryBo.deleteCategory(category_id);
+		Map returnMap = new HashMap();
+		if(flag){
+			returnMap.put("success", AdminConst.TRUE_FLAG);
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		String returnJson =  mapper.writeValueAsString(returnMap); 
+		return returnJson;
 	}
 }
